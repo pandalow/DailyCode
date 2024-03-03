@@ -1,0 +1,12 @@
+
+public class BicycleRegistration {
+
+	public static void main(String[] args) {
+//	Declaration, Creation
+		Bicycle01 b = new Bicycle();
+		
+		System.out.println(b.name)
+
+	}
+
+}

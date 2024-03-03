@@ -1,0 +1,10 @@
+package lvo;
+import java.util.List;
+import java.util.ArrayList;
+public class PersonCollection {
+	
+	List<Person> list;
+	public PersonCollection() {}
+	
+
+}
