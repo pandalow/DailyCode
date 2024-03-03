@@ -1,0 +1,20 @@
+.links{
+    font-size: 16px;
+    color: red;
+}
+.paragraph{
+    background: #00FFFF;
+    padding: 10px;
+    border:1px;
+    border-color: #6eeb34;
+    border-style: dashed;
+    margin-bottom:10px;
+}
+
+.center{
+    color: #663399;
+    text-align: center;
+}
+div.center span{
+    color:#d9eb34;
+}

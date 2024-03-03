@@ -1,0 +1,79 @@
+[
+    {
+        "process.arguments" : "-i -l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::gitbash",
+        "session.label" : "bash",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/bash",
+        "session.uuid" : "696ddfcc-c777-406d-ab81-f7f2ce400b27"
+    },
+    {
+        "process.arguments" : "-l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::knot-firebrick",
+        "session.label" : "csh",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/csh",
+        "session.uuid" : "c55665f6-f8a5-4f5d-815d-4fa192bdc6a2"
+    },
+    {
+        "process.arguments" : "-i -l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::knot-mediumorchid",
+        "session.label" : "dash",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/dash",
+        "session.uuid" : "68fb5922-823c-4d87-9bfb-12c864c57bc3"
+    },
+    {
+        "process.arguments" : "-i -l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::knot-mediumorchid",
+        "session.label" : "ksh",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/ksh",
+        "session.uuid" : "0b90d1cb-fb55-44fc-8ab2-6917fa34675c"
+    },
+    {
+        "process.arguments" : "-i -l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::powershell",
+        "session.label" : "sh",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/sh",
+        "session.uuid" : "017164e5-e594-47f5-8a7e-1f034254b4fb"
+    },
+    {
+        "process.arguments" : "-l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::knot-deeppink",
+        "session.label" : "tcsh",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/tcsh",
+        "session.uuid" : "20b467fc-464e-4d28-b513-e50359e5fe9b"
+    },
+    {
+        "process.arguments" : "-i -l",
+        "process.workingDirectory" : "$(HomeDir)",
+        "session.group" : "Shell sessions",
+        "session.icon" : "session::knot-forestgreen",
+        "session.label" : "zsh",
+        "session.protocol" : "Shell",
+        "session.system" : "macos",
+        "session.target" : "/bin/zsh",
+        "session.uuid" : "c88ba2e5-d67d-4641-9b75-00e693f97e60"
+    }
+]
