@@ -1,4 +1,4 @@
-package TankGameV4;
+package TankGameOwn;
 
 public class Bullet implements Runnable {
 

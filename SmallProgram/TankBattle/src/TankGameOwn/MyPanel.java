@@ -1,4 +1,4 @@
-package TankGameV4;
+package TankGameOwn;
 
 import javax.swing.*;
 import java.awt.*;
