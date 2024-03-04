@@ -1,11 +1,10 @@
 package Wrapper.src.com.generic;
 
-import org.junit.Test;
 
 import java.util.*;
 
 public class HomeWork01 {
-    @Test
+
     public void TestJ(){
         DAO<DAO.User> userDAO = new DAO<>();
         userDAO.save("01",new DAO.User(1,30,"LOVE"));
@@ -24,7 +23,7 @@ class DAO<T> {
     public DAO() {
         map = new HashMap<>();
     }
-    @Test
+
     public void save(String id, T entity) {
         this.map.put(id, entity);
     }
