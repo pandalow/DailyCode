@@ -1,5 +1,7 @@
 package TankGameV4;
 
+import sun.awt.image.ToolkitImage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,7 +11,12 @@ import java.util.Vector;
 public class MyPanel extends JPanel implements KeyListener, Runnable {
     HeroTank heroTank = null;
     Vector<EnemyTank> enemyTanks = new Vector<>();
+    Vector<Bomb> bombs = new Vector<>();
     int enemySize = 3;
+
+    Image image1 = null;
+    Image image2 = null;
+    Image image3 = null;
 
     public MyPanel() {
 
@@ -22,6 +29,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             enemyTanks.add(enemyTank);
             enemyTanks.get(i).shotBullet();
         }
+        image1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_1.gif"));
+        image2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
+        image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
 
     }
 
@@ -50,6 +60,20 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 }
             }
         }
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb bomb = bombs.get(i);
+            if(bomb.life>6){
+                g.drawImage(image1,bomb.x,bomb.y,30,30,this);
+            }else if(bomb.life>3){
+                g.drawImage(image2,bomb.x,bomb.y,30,30,this);
+            }else if(bomb.life>1){
+                g.drawImage(image3,bomb.x,bomb.y,30,30,this);
+            }
+            bomb.lifeDown();
+            if(bomb.life == 0){
+                bombs.remove(bomb);
+            }
+        }
     }
     public void hitTank(Bullet bullet, EnemyTank enemyTank) {
         switch (enemyTank.getDirect()) {
@@ -59,6 +83,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         bullet.getY() > enemyTank.getY() && bullet.getY() < enemyTank.getY() + 60) {
                     bullet.isLive = false;
                     enemyTank.isLive = false;
+                    Bomb bomb = new Bomb(enemyTank.getX(), enemyTank.getY());
+                    bombs.add(bomb);
+
                 }
                 break;
             case 1:
@@ -67,7 +94,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         bullet.getY() > enemyTank.getY() && bullet.getY() < enemyTank.getY() + 40) {
                     bullet.isLive = false;
                     enemyTank.isLive = false;
+                    Bomb bomb = new Bomb(enemyTank.getX(), enemyTank.getY());
+                    bombs.add(bomb);
                 }
+
         }
     }
 
@@ -135,7 +165,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         if (e.getKeyCode() == KeyEvent.VK_J) {
             heroTank.shotBullet();
         }
-        this.repaint();
 
     }
 
