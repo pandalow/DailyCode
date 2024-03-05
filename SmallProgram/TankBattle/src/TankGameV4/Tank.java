@@ -5,6 +5,7 @@ public class Tank {
     private int y;
     private int speed;
     private int direct;
+    boolean isLive = true;
 
     public Tank(int x, int y) {
         this.x = x;

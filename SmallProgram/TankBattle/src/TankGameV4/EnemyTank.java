@@ -11,7 +11,6 @@ public class EnemyTank extends Tank implements Runnable {
         super(x, y);
     }
 
-    boolean isLive = true;
 
     public void shotBullet() {
 
@@ -23,6 +22,25 @@ public class EnemyTank extends Tank implements Runnable {
 
     public void run() {
         while (true) {
+            if(isLive && bullets.size() <= 5){
+                switch (getDirect()){
+                    case 0:
+                        bullet = new Bullet(getX()+20,getY(),0);
+                        break;
+                    case 1:
+                        bullet = new Bullet(getX()+60,getY()+20,1);
+                        break;
+                    case 2:
+                        bullet = new Bullet(getX()+20,getY()+60,2);
+                        break;
+                    case 3:
+                        bullet = new Bullet(getX(),getY()+20,3);
+                        break;
+                }
+                bullets.add(bullet);
+                new Thread(bullet).start();
+            }
+
             switch (getDirect()) {
                 case 0:
                     for (int i = 0; i < 30; i++) {
