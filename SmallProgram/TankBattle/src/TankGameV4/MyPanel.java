@@ -21,11 +21,13 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     public MyPanel() {
 
         heroTank = new HeroTank(100, 100);
-        heroTank.setSpeed(3);
+        heroTank.setSpeed(5);
 
         for (int i = 0; i < enemySize; i++) {
             EnemyTank enemyTank = new EnemyTank((i + 1) * 100, 300);
             enemyTank.setDirect(2);
+            Thread thread = new Thread(enemyTank);
+            thread.start();
             enemyTanks.add(enemyTank);
             enemyTanks.get(i).shotBullet();
         }
@@ -40,13 +42,18 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         g.fillRect(0, 0, 1000, 750);
         // Draw User Tank
         drawTank(heroTank.getX(), heroTank.getY(), g, heroTank.getDirect(), 0);
-        // Draw bullet
-        if (heroTank.bullet != null && heroTank.bullet.isLive != false) {
-            g.drawOval(heroTank.bullet.getX(), heroTank.bullet.getY(), 2, 2);
+
+        for (int i = 0; i < heroTank.bullets.size(); i++) {
+            Bullet bullet = heroTank.bullets.get(i);
+            if (bullet != null && bullet.isLive) {
+                g.drawOval(bullet.getX(), bullet.getY(), 2, 2);
+            }else{
+                heroTank.bullets.remove(bullet);
+            }
         }
 
         for (int i = 0; i < enemyTanks.size(); i++) {
-           EnemyTank enemyTank = enemyTanks.get(i);
+            EnemyTank enemyTank = enemyTanks.get(i);
             if (enemyTank.isLive) {
                 drawTank(enemyTank.getX(), enemyTank.getY(), g, enemyTank.getDirect(), 1);
 
@@ -62,19 +69,32 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         }
         for (int i = 0; i < bombs.size(); i++) {
             Bomb bomb = bombs.get(i);
-            if(bomb.life>6){
-                g.drawImage(image1,bomb.x,bomb.y,30,30,this);
-            }else if(bomb.life>3){
-                g.drawImage(image2,bomb.x,bomb.y,30,30,this);
-            }else if(bomb.life>1){
-                g.drawImage(image3,bomb.x,bomb.y,30,30,this);
+            if (bomb.life > 6) {
+                g.drawImage(image1, bomb.x, bomb.y, 30, 30, this);
+            } else if (bomb.life > 3) {
+                g.drawImage(image2, bomb.x, bomb.y, 30, 30, this);
+            } else if (bomb.life > 1) {
+                g.drawImage(image3, bomb.x, bomb.y, 30, 30, this);
             }
             bomb.lifeDown();
-            if(bomb.life == 0){
+            if (bomb.life == 0) {
                 bombs.remove(bomb);
             }
         }
     }
+
+    public void hitEnemyTank(){
+        for(int j = 0;j < heroTank.bullets.size(); j++){
+            Bullet bullet = heroTank.bullets.get(j);
+            if (bullet != null && bullet.isLive) {
+                for (int i = 0; i < enemyTanks.size(); i++) {
+                    hitTank(bullet, enemyTanks.get(i));
+                }
+            }
+        }
+
+    }
+
     public void hitTank(Bullet bullet, EnemyTank enemyTank) {
         switch (enemyTank.getDirect()) {
             case 0:
@@ -83,9 +103,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         bullet.getY() > enemyTank.getY() && bullet.getY() < enemyTank.getY() + 60) {
                     bullet.isLive = false;
                     enemyTank.isLive = false;
+                    enemyTanks.remove(enemyTank);
                     Bomb bomb = new Bomb(enemyTank.getX(), enemyTank.getY());
                     bombs.add(bomb);
-
                 }
                 break;
             case 1:
@@ -94,6 +114,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         bullet.getY() > enemyTank.getY() && bullet.getY() < enemyTank.getY() + 40) {
                     bullet.isLive = false;
                     enemyTank.isLive = false;
+                    enemyTanks.remove(enemyTank);
                     Bomb bomb = new Bomb(enemyTank.getX(), enemyTank.getY());
                     bombs.add(bomb);
                 }
@@ -151,19 +172,29 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W) {
             heroTank.setDirect(0);
-            heroTank.moveUp();
+            if (heroTank.getY() > 0) {
+                heroTank.moveUp();
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             heroTank.setDirect(1);
-            heroTank.moveRight();
+            if (heroTank.getX() + 60 < 1000) {
+                heroTank.moveRight();
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             heroTank.setDirect(2);
-            heroTank.moveDown();
+            if (heroTank.getY() + 60 < 750) {
+                heroTank.moveDown();
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_A) {
             heroTank.setDirect(3);
-            heroTank.moveLeft();
+            if (heroTank.getX() > 0) {
+                heroTank.moveLeft();
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_J) {
-            heroTank.shotBullet();
+//            if (heroTank.bullet == null || !heroTank.bullet.isLive) {
+                heroTank.shotBullet();
+//            }
         }
 
     }
@@ -182,11 +213,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 throw new RuntimeException(e);
             }
 
-            if (heroTank.bullet != null && heroTank.bullet.isLive) {
-                for (int i = 0; i < enemyTanks.size(); i++) {
-                    hitTank(heroTank.bullet, enemyTanks.get(i));
-                }
-            }
+            hitEnemyTank();
             this.repaint();
         }
     }

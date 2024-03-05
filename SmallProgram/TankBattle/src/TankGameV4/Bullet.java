@@ -5,7 +5,7 @@ public class Bullet implements Runnable {
     private int x;
     private int y;
     private int direct;
-    private int speed = 3;
+    private int speed = 5;
 
     boolean isLive;
 
