@@ -10,13 +10,15 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     HeroTank heroTank = null;
     Vector<EnemyTank> enemyTanks = new Vector<>();
     Vector<Bomb> bombs = new Vector<>();
+    Vector<Node> nodes = new Vector<>();
     int enemySize = 4;
 
     Image image1 = null;
     Image image2 = null;
     Image image3 = null;
 
-    public MyPanel() {
+    public MyPanel(String key) {
+        nodes = Recorder.getNodesAndTankRec();
         Recorder.setEnemyTanks(this.enemyTanks);
         heroTank = new HeroTank(100, 100);
         heroTank.setSpeed(3);
@@ -24,16 +26,33 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         image2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
         image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
 
-        for (int i = 0; i < enemySize; i++) {
-            EnemyTank enemyTank = new EnemyTank((i + 2) * 100, 300);
-            enemyTank.setEnemyTanks(enemyTanks);
-            enemyTank.setDirect(0);
-            Thread thread = new Thread(enemyTank);
-            thread.start();
-            enemyTanks.add(enemyTank);
-            enemyTanks.get(i).shotBullet();
+        AePlayWave aePlayWave = new AePlayWave("./111.wav");
+        aePlayWave.start();
+        switch (key) {
+            case "1":
+            for (int i = 0; i < enemySize; i++) {
+                EnemyTank enemyTank = new EnemyTank((i + 2) * 100, 300);
+                enemyTank.setEnemyTanks(enemyTanks);
+                enemyTank.setDirect(0);
+                Thread thread = new Thread(enemyTank);
+                thread.start();
+                enemyTanks.add(enemyTank);
+                enemyTanks.get(i).shotBullet();
+            }
+            break;
+            case "2":
+                for (int i = 0; i < nodes.size(); i++) {
+                    Node node = nodes.get(i);
+                    EnemyTank enemyTank = new EnemyTank(node.getX(),node.getY());
+                    enemyTank.setEnemyTanks(enemyTanks);
+                    enemyTank.setDirect(node.getDirect());
+                    Thread thread = new Thread(enemyTank);
+                    thread.start();
+                    enemyTanks.add(enemyTank);
+                    enemyTanks.get(i).shotBullet();
+                }
+                break;
         }
-
     }
 
     public void paint(Graphics g) {
