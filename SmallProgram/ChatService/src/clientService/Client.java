@@ -33,7 +33,6 @@ public class Client {
         //Create a new thread with user customer service listening for messages
         Thread thread = new Thread(new ClientThreading(socket));
         thread.start();
-        thread.setDaemon(true);
         System.out.println("Client threading is running");
         commandExplain();
 
